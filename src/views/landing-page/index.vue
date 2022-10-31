@@ -37,7 +37,7 @@
       <div>
         <div>
           <ion-row>
-            <ion-col>
+            <ion-col size="12">
               <ion-button
                 expand="block"
                 router-link="/login"
@@ -45,6 +45,9 @@
               >
                 LOGIN
               </ion-button>
+            </ion-col>
+            <ion-col size="12" style="margin-left:20%">
+               didn't have account? <a href="/register"> Register </a>
             </ion-col>
           </ion-row>
         </div>
