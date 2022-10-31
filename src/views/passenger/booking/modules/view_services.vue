@@ -11,7 +11,7 @@
         message="Please wait..."
       />
       <ion-toolbar class="toolbar" style="padding-top: 10px">
-        <ion-title style="margin-left: 20%">ADD STAFF</ion-title>
+        <ion-title style="margin-left: 20%">SERVICES</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="dismiss()">Close</ion-button>
         </ion-buttons>
