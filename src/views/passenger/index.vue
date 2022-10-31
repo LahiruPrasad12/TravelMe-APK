@@ -25,13 +25,18 @@
         </ion-tab-button>
 
         <ion-tab-button
-            href="/admin_home/tracking"
-            tab="tracking"
-            v-on:click="afterTabChange('tracking')" style="background-color: black">
-          <ion-icon :icon="mapOutline"/>
-          <ion-label v-show="tabName==='tracking'" style="color: #5bf5a8;">Tracking</ion-label>
-          <ion-label v-show="tabName !=='tracking'" style="color: #ffffff;">Tracking</ion-label>
-
+          @click="confirmRequest()"
+          tab="profile"
+          v-on:click="afterTabChange('profile')"
+          style="background-color: black"
+        >
+          <ion-icon :icon="logOutOutline" />
+          <ion-label v-show="tabName === 'logout'" style="color: #5bf5a8"
+            >Logout</ion-label
+          >
+          <ion-label v-show="tabName !== 'logout'" style="color: #ffffff"
+            >Logout</ion-label
+          >
         </ion-tab-button>
 
         <!--        <ion-tab-button-->
@@ -51,7 +56,7 @@
 
 <script>
 import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {cafeOutline, calendarOutline, homeOutline, timeOutline,peopleOutline, mapOutline} from 'ionicons/icons';
+import {cafeOutline, calendarOutline, homeOutline, timeOutline,peopleOutline, mapOutline, logOutOutline} from 'ionicons/icons';
 import {useRouter} from "vue-router";
 import {defineComponent} from "vue";
 
@@ -81,6 +86,7 @@ export default defineComponent({
       peopleOutline,
       timeOutline,
       router,
+      logOutOutline
     }
   },
   data() {
@@ -92,6 +98,34 @@ export default defineComponent({
       tab3: "",
       tab4: "",
     };
+  },
+  methods:{
+         async confirmRequest() {
+      const alert = await alertController.create({
+        header: 'Are you sure you want logout?',
+        cssClass: 'custom-alert',
+        buttons: [
+          {
+            text: 'Yes',
+            cssClass: 'alert-button-confirm',
+            handler: () => {
+              this.logout()
+            }
+          },
+          {
+            text: 'No',
+            cssClass: 'alert-button-cancel',
+          },
+          
+        ],
+      });
+
+      await alert.present();
+    },
+    logout() {
+      localStorage.removeItem("token");
+      this.router.push("/login");
+    },
   }
 });
 </script>

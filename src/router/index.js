@@ -24,10 +24,6 @@ const routes = [
                 path: 'payment/:id',
                 component: () => import('@/views/passenger/payments/index')
             },
-            {
-                path: 'qr',
-                component: () => import('@/views/passenger/components/generate_qr')
-            },
         ]
     },
 ]
