@@ -1,18 +1,25 @@
 <template>
   <ion-page>
-
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar style="padding-bottom:20px; background-color: black" slot="bottom">
-
+      <ion-tab-bar
+        style="padding-bottom: 20px; background-color: black"
+        slot="bottom"
+      >
         <ion-tab-button
-            href="/admin_home/dash_board"
-            selected
-            tab="dash_board"
-            v-on:click="afterTabChange('dash_board')" style="background-color: black">
-          <ion-icon :icon="homeOutline"/>
-          <ion-label v-show="tabName==='dash_board'" style="color: #5bf5a8;">Dashboard</ion-label>
-          <ion-label v-show="tabName !=='dash_board'" style="color: #ffffff;">Dashboard</ion-label>
+          href="/admin_home/dash_board"
+          selected
+          tab="dash_board"
+          v-on:click="afterTabChange('dash_board')"
+          style="background-color: black"
+        >
+          <ion-icon :icon="homeOutline" />
+          <ion-label v-show="tabName === 'dash_board'" style="color: #5bf5a8"
+            >Dashboard</ion-label
+          >
+          <ion-label v-show="tabName !== 'dash_board'" style="color: #ffffff"
+            >Dashboard</ion-label
+          >
         </ion-tab-button>
 
         <!-- <ion-tab-button
@@ -38,7 +45,6 @@
             >Logout</ion-label
           >
         </ion-tab-button>
-
       </ion-tab-bar>
     </ion-tabs>
     <!--      <ion-tab-bar slot="bottom">-->
@@ -47,13 +53,38 @@
 </template>
 
 <script>
-import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {cafeOutline, calendarOutline, homeOutline, timeOutline,peopleOutline, mapOutline, logOutOutline} from 'ionicons/icons';
-import {useRouter} from "vue-router";
-import {defineComponent} from "vue";
+import {
+  IonIcon,
+  IonLabel,
+  IonPage,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  alertController
+} from "@ionic/vue";
+import {
+  cafeOutline,
+  calendarOutline,
+  homeOutline,
+  timeOutline,
+  peopleOutline,
+  mapOutline,
+  logOutOutline,
+} from "ionicons/icons";
+import { useRouter } from "vue-router";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: {IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet},
+  components: {
+    IonLabel,
+    IonTabs,
+    IonTabBar,
+    IonTabButton,
+    IonIcon,
+    IonPage,
+    IonRouterOutlet,
+  },
   methods: {
     async beforeTabChange() {
       this.no -= 1;
@@ -67,7 +98,6 @@ export default defineComponent({
     },
   },
   setup() {
-
     const router = useRouter();
     return {
       no: 1,
@@ -78,8 +108,8 @@ export default defineComponent({
       peopleOutline,
       timeOutline,
       router,
-      logOutOutline
-    }
+      logOutOutline,
+    };
   },
   data() {
     return {
@@ -91,24 +121,23 @@ export default defineComponent({
       tab4: "",
     };
   },
-  methods:{
-         async confirmRequest() {
+  methods: {
+    async confirmRequest() {
       const alert = await alertController.create({
-        header: 'Are you sure you want logout?',
-        cssClass: 'custom-alert',
+        header: "Are you sure you want logout?",
+        cssClass: "custom-alert",
         buttons: [
           {
-            text: 'Yes',
-            cssClass: 'alert-button-confirm',
+            text: "Yes",
+            cssClass: "alert-button-confirm",
             handler: () => {
-              this.logout()
-            }
+              this.logout();
+            },
           },
           {
-            text: 'No',
-            cssClass: 'alert-button-cancel',
+            text: "No",
+            cssClass: "alert-button-cancel",
           },
-          
         ],
       });
 
@@ -116,8 +145,8 @@ export default defineComponent({
     },
     logout() {
       localStorage.removeItem("token");
-      this.router.push("/login");
+      this.router.push("/");
     },
-  }
+  },
 });
 </script>
