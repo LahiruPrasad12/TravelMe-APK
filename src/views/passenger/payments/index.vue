@@ -94,15 +94,20 @@
       </ion-card>
     </ion-content>
     <ion-content fullscreen v-if="is_make_payment">
+      <ion-textarea
+        placeholder="Please save this QR Code to prove your payment to the driver"
+        style="text-align: center"
+      ></ion-textarea>
       <div style="margin-left: 18%; margin-top: 20%">
         <vue-qrcode v-bind:value="qrValue" />
       </div>
-       <ion-text
-       @click="router.push('/home/dash_board')"
-          class="ion-text-wrap"
-          color="primary"
-          style="text-align: center; margin-left: 32%; margin-right: 12%"
-        >Go Back To Home</ion-text>
+      <ion-text
+        @click="router.push('/home/dash_board')"
+        class="ion-text-wrap"
+        color="primary"
+        style="text-align: center; margin-left: 32%; margin-right: 12%"
+        >Go Back To Home</ion-text
+      >
     </ion-content>
   </ion-page>
 </template>
@@ -126,6 +131,7 @@ import {
   IonSlides,
   IonSlide,
   IonText,
+  IonTextarea
 } from "@ionic/vue";
 import {
   cafeOutline,
@@ -158,6 +164,7 @@ export default defineComponent({
     IonSlide,
     VueQrcode,
     IonText,
+    IonTextarea
   },
   methods: {
     carPayment() {
@@ -169,15 +176,24 @@ export default defineComponent({
       this.is_paypal_payment = true;
     },
     makePayment() {
-      this.is_make_payment = true;
-      this.qrValue = `name : ${this.get_sevice.name}, origin : ${this.get_sevice.origin} , detination : ${this.get_sevice.destination}, 
+      try {
+        this.is_make_payment = true;
+        this.qrValue = `name : ${this.get_sevice.name}, origin : ${this.get_sevice.origin} , detination : ${this.get_sevice.destination}, 
       amount : ${this.get_sevice.price}, payment-method : "cart payment", user-type : "passenger"`;
+        this.successToast("Booking has been completed successfully");
+      } catch (error) {
+        console.log(error);
+      }
     },
     async getServiceData() {
-      let respond = (await services_apis.getOneService(this.id)).data.data
-        .Servicess[0];
-      this.get_sevice = respond;
-      console.log(respond);
+      try {
+        let respond = (await services_apis.getOneService(this.id)).data.data
+          .Servicess[0];
+        this.get_sevice = respond;
+        console.log(respond);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 
