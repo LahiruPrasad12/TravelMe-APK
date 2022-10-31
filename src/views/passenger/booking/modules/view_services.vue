@@ -5,6 +5,11 @@
     :leave-animation="leaveAnimation"
   >
     <ion-content fullscreen>
+      <ion-loading
+        :is-open="is_loading"
+        cssClass="my-custom-class"
+        message="Please wait..."
+      />
       <ion-toolbar class="toolbar" style="padding-top: 10px">
         <ion-title style="margin-left: 20%">ADD STAFF</ion-title>
         <ion-buttons slot="end">
@@ -13,75 +18,42 @@
       </ion-toolbar>
       <ion-grid>
         <ion-row>
-          <ion-col size="6">
-            <ion-label position="floating">First Name</ion-label>
-            <ion-input
-              v-model="form.first_name"
-              class="u-input"
-              type="text"
-            ></ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Last Name</ion-label>
-            <ion-input
-              class="u-input"
-              v-model="form.last_name"
-              clear-input
-              required
-              type="text"
-            ></ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Email</ion-label>
-            <ion-input
-              class="u-input"
-              v-model="form.email"
-              clear-input
-              required
-              type="email"
-            ></ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Mobile</ion-label>
-            <ion-input
-              class="u-input"
-              v-model="form.mobile"
-              clear-input
-              required
-              type="number"
-            ></ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Date Of Birth</ion-label>
-            <ion-input
-              class="u-input"
-              v-model="form.DOB"
-              clear-input
-              required
-              type="date"
-            >
-              <!--              <ion-col class="ion-align-self-center" size="1">-->
-              <!--                <ion-icon :icon="calendarOutline"/>-->
-              <!--              </ion-col>-->
-            </ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Select Role</ion-label>
-            <ion-select
-              class="u-input"
-              v-model="form.account_type"
-              placeholder="Select role"
-              required
-            >
-              <ion-select-option value="stock-manager"
-                >Stock-Manager</ion-select-option
-              >
-              <ion-select-option value="staff">Staff</ion-select-option>
-              <ion-select-option value="supplier">Supplier</ion-select-option>
-            </ion-select>
+          <ion-col size="12" v-for="service in services" :key="service._id">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{ service.name }}</ion-card-title>
+                <ion-card-subtitle
+                  >From {{ service.origin.toUpperCase() }} To
+                  {{ service.destination.toUpperCase() }}</ion-card-subtitle
+                >
+              </ion-card-header>
+
+              <ion-card-content>
+                <span>
+                  <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
+                  {{ service.start_time }} -
+                  <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
+                  {{ service.arrival_time }}
+                </span>
+                <br />
+                <span>
+                  <ion-icon slot="icon-only" :icon="pricetagOutline"></ion-icon>
+                  {{ service.price }} LKR
+                </span>
+                <br />
+                <span>
+                  <ion-icon slot="icon-only" :icon="carOutline"></ion-icon> {{ service.bus_num }} |
+                  <ion-icon slot="icon-only" :icon="contractOutline"></ion-icon> {{ service.type }} |
+                  <ion-icon
+                    slot="icon-only"
+                    :icon="phoneLandscapeOutline"
+                  ></ion-icon> {{ service.contact_num }} |
+                </span>
+              </ion-card-content>
+            </ion-card>
           </ion-col>
         </ion-row>
-
+        <!-- 
         <ion-button
           :disabled="is_btn_loading"
           class="mt-5"
@@ -92,7 +64,7 @@
         >
           <ion-spinner :hidden="!is_btn_loading" name="circles"></ion-spinner>
           Save
-        </ion-button>
+        </ion-button> -->
       </ion-grid>
     </ion-content>
   </ion-modal>
@@ -101,14 +73,15 @@
 <script>
 import services_apis from "@/apis/modules/passengers/services_apis";
 import {
-  addCircleOutline,
-  arrowDownCircleOutline,
-  arrowForwardCircleOutline,
-  arrowForwardOutline,
+  timeOutline,
+  pricetagOutline,
+  carOutline,
+  phoneLandscapeOutline,
+  accessibilityOutline,
+  contractOutline,
   cafeOutline,
   calendarOutline,
   removeCircleOutline,
-  timeOutline,
   minusOutline,
 } from "ionicons/icons";
 import {
@@ -138,6 +111,7 @@ import {
   IonCardContent,
   IonCardTitle,
   createAnimation,
+  IonLoading,
 } from "@ionic/vue";
 
 export default {
@@ -167,6 +141,7 @@ export default {
     IonCardTitle,
     IonText,
     IonIcon,
+    IonLoading,
   },
   name: "add_student",
   setup() {
@@ -194,21 +169,24 @@ export default {
     const leaveAnimation = (baseEl) => {
       return enterAnimation(baseEl).direction("reverse");
     };
-    return { enterAnimation, leaveAnimation, calendarOutline };
+    return {
+      enterAnimation,
+      leaveAnimation,
+      calendarOutline,
+      timeOutline,
+      pricetagOutline,
+      carOutline,
+      phoneLandscapeOutline,
+      accessibilityOutline,
+      contractOutline,
+    };
   },
 
   data() {
     return {
-      is_btn_loading: false,
+      is_loading: false,
       is_open: false,
-      form: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        DOB: "",
-        mobile: "",
-        account_type: "",
-      },
+      services: [],
     };
   },
   methods: {
@@ -221,22 +199,35 @@ export default {
       this.is_open = true;
     },
     async getServices(origin, destination) {
-        let respond = await services_apis.getAllServices(origin, destination);
-    },
-    async saveData() {
       try {
-        this.is_btn_loading = true;
-        // await staff_api.saveStaff(this.form)
-        await this.successToast("Staff Added Successfully");
-        this.dismiss();
-      } catch (e) {
-        await this.dangerToast(e);
-      }
-      this.is_btn_loading = false;
+        this.is_loading = true;
+        let respond = (await services_apis.getAllServices(origin, destination))
+          .data.data.Servicess;
+        this.services = respond;
+      } catch (error) {}
+      this.is_loading = false;
     },
   },
 };
 </script>
 
 <style scoped>
+ion-card {
+  --background: #000;
+  --color: #9efff0;
+}
+
+ion-card-title {
+  --color: #52ffe4;
+}
+
+ion-card-subtitle {
+  --color: #d1fff8;
+}
+
+/* iOS places the subtitle above the title */
+ion-card-header.ios {
+  display: flex;
+  flex-flow: column-reverse;
+}
 </style>
