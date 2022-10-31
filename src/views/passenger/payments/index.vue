@@ -43,19 +43,19 @@
         <ion-card-content>
           <ion-item>
             <ion-label position="floating">Amount</ion-label>
-            <ion-input type="number" v-model="amount"></ion-input>
+            <ion-input type="number" v-model="amount" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Card Number</ion-label>
-            <ion-input type="number" v-model="cardNumber"></ion-input>
+            <ion-input type="number" v-model="cardNumber" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Expiry Date</ion-label>
-            <ion-input type="date" v-model="expiryDate"></ion-input>
+            <ion-input type="date" v-model="expiryDate" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">CVV</ion-label>
-            <ion-input type="number" v-model="cvv"></ion-input>
+            <ion-input type="number" v-model="cvv" required></ion-input>
           </ion-item>
           <ion-button expand="block" color="primary" @click="makePayment()"
             >Make Payment</ion-button
