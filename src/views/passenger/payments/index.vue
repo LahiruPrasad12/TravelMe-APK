@@ -5,9 +5,9 @@
         <ion-title>MAKE PAYMENT</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content fullscreen>
-      <ion-segment value="buttons" scrollable>
-        <ion-segment-button value="default" checked @click="carPayment()">
+    <ion-content fullscreen v-if="!is_make_payment">
+      <ion-segment value="cart_payment" scrollable>
+        <ion-segment-button value="cart_payment" checked @click="carPayment()">
           <ion-label>
             <a
               class="nav-link active"
@@ -21,7 +21,7 @@
               <img src="https://i.imgur.com/sB4jftM.png" width="80" /> </a
           ></ion-label>
         </ion-segment-button>
-        <ion-segment-button value="segment" @click="payPalPayment()">
+        <ion-segment-button value="paypal_payment" @click="payPalPayment()">
           <ion-label>
             <a
               class="nav-link"
@@ -77,11 +77,17 @@
         </ion-card-content>
       </ion-card>
     </ion-content>
+    <ion-content fullscreen v-if="is_make_payment">
+      <div style="margin-left: 18%; margin-top: 20%">
+        <vue-qrcode v-bind:value="qrValue" />
+      </div>
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
 import services_apis from "@/apis/modules/passengers/services_apis";
+import VueQrcode from "vue-qrcode";
 import {
   IonIcon,
   IonLabel,
@@ -110,6 +116,7 @@ import { useRouter } from "vue-router";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name: "HelloWorld",
   components: {
     IonLabel,
     IonTabs,
@@ -125,6 +132,7 @@ export default defineComponent({
     IonSegmentButton,
     IonSlides,
     IonSlide,
+    VueQrcode,
   },
   methods: {
     carPayment() {
@@ -136,16 +144,20 @@ export default defineComponent({
       this.is_paypal_payment = true;
     },
     makePayment() {
-      console.log(this.form);
+      this.is_make_payment = true;
+      this.qrValue = `name : ${this.get_sevice.name}, origin : ${this.get_sevice.origin} , detination : ${this.get_sevice.destination}, 
+      amount : ${this.get_sevice.price}, payment-method : "cart payment", user-type : "passenger"`;
     },
-    async getServiceData(){
-      let respond = (await services_apis.getOneService(this.id)).data.data.Servicess[0]
-      console.log(respond)
-    }
+    async getServiceData() {
+      let respond = (await services_apis.getOneService(this.id)).data.data
+        .Servicess[0];
+      this.get_sevice = respond;
+      console.log(respond);
+    },
   },
 
-  mounted(){
-    this.getServiceData()
+  mounted() {
+    this.getServiceData();
   },
   setup() {
     const router = useRouter();
@@ -163,14 +175,18 @@ export default defineComponent({
   data() {
     return {
       id: this.$route.params.id,
+      segment_value : "card_payment",
       form: {
         amount: "",
         cardNumber: "",
         expiryDate: "",
         cvv: "",
       },
-      is_card_payment: false,
+      is_card_payment: true,
       is_paypal_payment: false,
+      qrValue: ``,
+      is_make_payment: false,
+      get_sevice: [],
     };
   },
 });
