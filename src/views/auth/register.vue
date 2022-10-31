@@ -111,7 +111,7 @@
 
 
 <script>
-// import staff_api from "@/apis/modules/admin_apis/staff_apis";
+import auth_api from "@/apis/modules/auth_api";
 import {
   addCircleOutline,
   arrowDownCircleOutline,
@@ -234,9 +234,10 @@ export default {
     async saveData() {
       try {
         this.is_btn_loading = true;
-        // await staff_api.saveStaff(this.form)
-        await this.successToast("Staff Added Successfully");
-        this.dismiss();
+        await auth_api.register(this.form)
+        await this.successToast("user registered successfully");
+        this.is_btn_loading = false;
+        this.$router.push("/login");
       } catch (e) {
         await this.dangerToast(e);
       }
