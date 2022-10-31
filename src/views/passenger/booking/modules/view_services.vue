@@ -217,7 +217,8 @@ export default {
     },
 
     make_payment(data) {
-        this.$router.push(`home/payment/${data._id}`);
+       
+        window.location = 'home/payment/'+data._id;
         
     },
   },

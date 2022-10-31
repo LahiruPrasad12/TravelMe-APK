@@ -21,7 +21,7 @@
               <img src="https://i.imgur.com/sB4jftM.png" width="80" /> </a
           ></ion-label>
         </ion-segment-button>
-        <ion-segment-button value="segment"  @click="payPalPayment()">
+        <ion-segment-button value="segment" @click="payPalPayment()">
           <ion-label>
             <a
               class="nav-link"
@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import services_apis from "@/apis/modules/passengers/services_apis";
 import {
   IonIcon,
   IonLabel,
@@ -137,6 +138,14 @@ export default defineComponent({
     makePayment() {
       console.log(this.form);
     },
+    async getServiceData(){
+      let respond = (await services_apis.getOneService(this.id)).data.data.Servicess[0]
+      console.log(respond)
+    }
+  },
+
+  mounted(){
+    this.getServiceData()
   },
   setup() {
     const router = useRouter();
@@ -154,14 +163,14 @@ export default defineComponent({
   data() {
     return {
       id: this.$route.params.id,
-      form:{
-        amount:'',
-        cardNumber:'',
-        expiryDate:'',
-        cvv:''
+      form: {
+        amount: "",
+        cardNumber: "",
+        expiryDate: "",
+        cvv: "",
       },
-      is_card_payment:false,
-      is_paypal_payment:false
+      is_card_payment: false,
+      is_paypal_payment: false,
     };
   },
 });
