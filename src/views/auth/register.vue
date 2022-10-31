@@ -26,6 +26,13 @@
               class="u-input"
               type="text"
             ></ion-input>
+            <ion-row v-show="first_nameError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ first_nameError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
           <ion-col size="12">
             <ion-label position="floating">Last Name</ion-label>
@@ -36,6 +43,13 @@
               required
               type="text"
             ></ion-input>
+            <ion-row v-show="last_nameError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ last_nameError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
           <ion-col size="12">
             <ion-label position="floating">Email</ion-label>
@@ -65,6 +79,13 @@
               type="text"
             >
             </ion-input>
+            <ion-row v-show="passwordError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ passwordError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
           <ion-col size="6">
             <ion-label position="floating">Mobile</ion-label>
@@ -74,7 +95,15 @@
               clear-input
               required
               type="number"
+              minlength="10"
             ></ion-input>
+            <ion-row v-show="mobileError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ mobileError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
 
           <ion-col size="6">
@@ -92,6 +121,13 @@
                 >Foreign Passenger</ion-select-option
               >
             </ion-select>
+            <ion-row v-show="account_typeError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ account_typeError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
 
@@ -193,6 +229,7 @@ export default defineComponent({
       password: "",
       mobile: "",
       account_type: "",
+      validat: "",
     };
   },
   setup() {
@@ -213,6 +250,34 @@ export default defineComponent({
       return true;
     });
 
+    defineRule("requiredFirstName", (value) => {
+      if (!value || !value.length) {
+        return "The First Name field is required";
+      }
+      return true;
+    });
+
+    defineRule("requiredLastName", (value) => {
+      if (!value || !value.length) {
+        return "The Last Name field is required";
+      }
+      return true;
+    });
+
+    defineRule("requiredAccountType", (value) => {
+      if (!value || !value.length) {
+        return "The Account type field is required";
+      }
+      return true;
+    });
+
+    defineRule("requiredMobile", (value) => {
+      if (!value || !value.length) {
+        return "The Mobile Number field is required";
+      }
+      return true;
+    });
+
     // checking valid email
     defineRule("email", (email) => {
       if (
@@ -220,12 +285,12 @@ export default defineComponent({
           email
         )
       ) {
-        return "invalid email";
+        return "Please enter a valid email";
       }
       return true;
     });
 
-    // checking valid email
+    // checking valid [password]
     defineRule("password", (password) => {
       if (
         !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/.test(password)
@@ -241,7 +306,11 @@ export default defineComponent({
 
     const schema = {
       email: "requiredEmail|email",
-      password: "requiredPassword",
+      password: "requiredPassword|password",
+      first_name: "requiredFirstName",
+      last_name: "requiredLastName",
+      account_type: "requiredAccountType",
+      mobile: "requiredMobile",
     };
 
     // Create a form context with the validation schema
@@ -253,6 +322,13 @@ export default defineComponent({
     const { value: email, errorMessage: emailError } = useField("email");
     const { value: password, errorMessage: passwordError } =
       useField("password");
+    const { value: first_name, errorMessage: first_nameError } =
+      useField("first_name");
+    const { value: last_name, errorMessage: last_nameError } =
+      useField("last_name");
+    const { value: account_type, errorMessage: account_typeError } =
+      useField("account_type");
+    const { value: mobile, errorMessage: mobileError } = useField("mobile");
 
     const router = useRouter();
     return {
@@ -261,11 +337,19 @@ export default defineComponent({
       passwordError,
       email,
       password,
+      last_nameError,
+      account_typeError,
+      account_type,
+      last_name,
+      mobileError,
+      mobile,
       router,
       lockClosedOutline,
       mailOutline,
       eye,
       eyeOff,
+      first_name,
+      first_nameError,
     };
   },
   methods: {
@@ -277,6 +361,17 @@ export default defineComponent({
       this.is_open = true;
     },
     async saveData() {
+      try {
+        this.validat = await this.validation();
+        if (this.validat.valid) {
+          this.registerUser();
+        }
+      } catch (e) {
+        await this.dangerToast(e);
+      }
+    },
+
+    async registerUser() {
       try {
         this.is_btn_loading = true;
         let payload = {
