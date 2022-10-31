@@ -16,7 +16,7 @@
           <ion-button @click="dismiss()">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-grid>
+      <ion-grid v-if="services.length > 0">
         <ion-row>
           <ion-col
             size="12"
@@ -74,6 +74,26 @@
           Save
         </ion-button> -->
       </ion-grid>
+      <div>
+        <lottie-animation
+          ref="anim"
+          :animationData="require('@/assets/lottie/waiting.json')"
+          :loop="true"
+          :autoPlay="true"
+          :speed="1"
+          @loopComplete="loopComplete"
+          @complete="complete"
+          @enterFrame="enterFrame"
+          @segmentStart="segmentStart"
+          @stopped="stopped"
+        />
+        <ion-textarea
+          class="ion-text-wrap"
+          placeholder="Oh Sorry! Theres no bus avaible at this time. please be good petirnt and wait for a while"
+          style="text-align: center"
+          :clear-on-edit="true"
+        ></ion-textarea>
+      </div>
     </ion-content>
   </ion-modal>
 </template>
@@ -120,6 +140,7 @@ import {
   IonCardTitle,
   createAnimation,
   IonLoading,
+  IonTextarea,
 } from "@ionic/vue";
 
 export default {
@@ -150,6 +171,7 @@ export default {
     IonText,
     IonIcon,
     IonLoading,
+    IonTextarea,
   },
   name: "add_student",
   setup() {
@@ -217,9 +239,7 @@ export default {
     },
 
     make_payment(data) {
-       
-        window.location = 'home/payment/'+data._id;
-        
+      window.location = "home/payment/" + data._id;
     },
   },
 };
