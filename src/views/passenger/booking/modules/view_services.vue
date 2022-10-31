@@ -16,6 +16,7 @@
           <ion-button @click="dismiss()">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
+
       <ion-grid v-if="services.length > 0">
         <ion-row>
           <ion-col
@@ -24,41 +25,52 @@
             :key="service._id"
             @click="make_payment(service)"
           >
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>{{ service.name }}</ion-card-title>
-                <ion-card-subtitle
-                  >From {{ service.origin.toUpperCase() }} To
-                  {{ service.destination.toUpperCase() }}</ion-card-subtitle
-                >
-              </ion-card-header>
+            <div
+              class="small-header anim"
+              style="--delay: 0.3s; margin-left: 5px"
+            >
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>{{ service.name }}</ion-card-title>
+                  <ion-card-subtitle
+                    >From {{ service.origin.toUpperCase() }} To
+                    {{ service.destination.toUpperCase() }}</ion-card-subtitle
+                  >
+                </ion-card-header>
 
-              <ion-card-content>
-                <span>
-                  <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
-                  {{ service.start_time }} -
-                  <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
-                  {{ service.arrival_time }}
-                </span>
-                <br />
-                <span>
-                  <ion-icon slot="icon-only" :icon="pricetagOutline"></ion-icon>
-                  {{ service.price }} LKR
-                </span>
-                <br />
-                <span>
-                  <ion-icon slot="icon-only" :icon="carOutline"></ion-icon>
-                  {{ service.bus_num }} |
-                  <ion-icon slot="icon-only" :icon="contractOutline"></ion-icon>
-                  {{ service.type }} |
-                  <ion-icon
-                    slot="icon-only"
-                    :icon="phoneLandscapeOutline"
-                  ></ion-icon>
-                  {{ service.contact_num }} |
-                </span>
-              </ion-card-content>
-            </ion-card>
+                <ion-card-content>
+                  <span>
+                    <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
+                    {{ service.start_time }} -
+                    <ion-icon slot="icon-only" :icon="timeOutline"></ion-icon>
+                    {{ service.arrival_time }}
+                  </span>
+                  <br />
+                  <span>
+                    <ion-icon
+                      slot="icon-only"
+                      :icon="pricetagOutline"
+                    ></ion-icon>
+                    {{ service.price }} LKR
+                  </span>
+                  <br />
+                  <span>
+                    <ion-icon slot="icon-only" :icon="carOutline"></ion-icon>
+                    {{ service.bus_num }} |
+                    <ion-icon
+                      slot="icon-only"
+                      :icon="contractOutline"
+                    ></ion-icon>
+                    {{ service.type }} |
+                    <ion-icon
+                      slot="icon-only"
+                      :icon="phoneLandscapeOutline"
+                    ></ion-icon>
+                    {{ service.contact_num }} |
+                  </span>
+                </ion-card-content>
+              </ion-card>
+            </div>
           </ion-col>
         </ion-row>
         <!-- 
