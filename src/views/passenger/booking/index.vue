@@ -33,6 +33,15 @@
                         <ion-select-option value="negombo"
                           >Negombo</ion-select-option
                         >
+                        <ion-select-option value="galle"
+                          >Galle</ion-select-option
+                        >
+                        <ion-select-option value="colombo"
+                          >Colombo</ion-select-option
+                        >
+                        <ion-select-option value="embilipitiya"
+                          >Embilipitiya</ion-select-option
+                        >
                       </ion-select>
                     </ion-item>
                   </ion-list>
@@ -43,8 +52,9 @@
                   class="small-header anim"
                   style="--delay: 0.3s; margin-left: 5px"
                 >
-                  <ion-button class="ion-float-right">
-                    <ion-icon slot="icon-only" :icon="star"></ion-icon>
+                  <ion-button class="ion-float-right" @click="chengeDirection()">
+                    <ion-icon slot="icon-only" :icon="arrowUp"></ion-icon>
+                    <ion-icon slot="icon-only" :icon="arrowDown"></ion-icon>
                   </ion-button>
                 </div>
               </ion-col>
@@ -70,6 +80,15 @@
                         <ion-select-option value="embilipitiya"
                           >Embilipitiya</ion-select-option
                         >
+                        <ion-select-option value="matara"
+                          >Matara</ion-select-option
+                        >
+                        <ion-select-option value="jaffna"
+                          >Jaffna</ion-select-option
+                        >
+                        <ion-select-option value="negombo"
+                          >Negombo</ion-select-option
+                        >
                       </ion-select>
                     </ion-item>
                   </ion-list>
@@ -80,7 +99,9 @@
                   class="small-header anim"
                   style="--delay: 0.3s; margin-left: 5px"
                 >
-                  <ion-button expand="block" @click="ViewServices()" >Proceed</ion-button>
+                  <ion-button expand="block" @click="ViewServices()"
+                    >Proceed</ion-button
+                  >
                 </div>
               </ion-col>
             </ion-row>
@@ -88,14 +109,14 @@
         </ion-list>
       </div>
     </ion-content>
-    <ViewServices ref = "service" />
+    <ViewServices ref="service" />
   </ion-page>
 </template>
 
 <script>
 import "@/assets/test.css";
 import ViewServices from "./modules/view_services.vue";
-import { star } from "ionicons/icons";
+import { arrowUp, arrowDown } from "ionicons/icons";
 import {
   IonAvatar,
   IonBackButton,
@@ -169,22 +190,26 @@ export default defineComponent({
     ViewServices,
   },
   name: "index",
-    data() {
+  data() {
     return {
-     origin:'',
-     destination:''
-    }
+      origin: "",
+      destination: "",
+    };
   },
 
-
   setup() {
-    return { star };
+    return { arrowUp, arrowDown };
   },
 
   methods: {
-    ViewServices(){
+    ViewServices() {
       console.log(this.origin);
-      this.$refs.service.openViewServicesModal(this.origin,this.destination);
+      this.$refs.service.openViewServicesModal(this.origin, this.destination);
+    },
+    chengeDirection(){
+      let temp = this.origin;
+      this.origin = this.destination;
+      this.destination = temp;
     }
   },
 });

@@ -74,7 +74,7 @@
           Save
         </ion-button> -->
       </ion-grid>
-      <div>
+      <div v-else>
         <lottie-animation
           ref="anim"
           :animationData="require('@/assets/lottie/waiting.json')"
