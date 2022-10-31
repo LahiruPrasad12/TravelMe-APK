@@ -19,49 +19,47 @@
           </ion-col>
         </ion-row>
         <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="6">
+          <ion-col size="12">
             <ion-label position="floating">First Name</ion-label>
             <ion-input
-              v-model="form.first_name"
+              v-model="first_name"
               class="u-input"
               type="text"
             ></ion-input>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="12">
             <ion-label position="floating">Last Name</ion-label>
             <ion-input
               class="u-input"
-              v-model="form.last_name"
+              v-model="last_name"
               clear-input
               required
               type="text"
             ></ion-input>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="12">
             <ion-label position="floating">Email</ion-label>
             <ion-input
               class="u-input"
-              v-model="form.email"
+              v-model="email"
               clear-input
               required
-              type="email"
+              name="email"
+              type="text"
             ></ion-input>
+            <ion-row v-show="emailError" class="ion-text-start">
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <span>{{ emailError }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ion-col>
-          <ion-col size="6">
-            <ion-label position="floating">Mobile</ion-label>
-            <ion-input
-              class="u-input"
-              v-model="form.mobile"
-              clear-input
-              required
-              type="number"
-            ></ion-input>
-          </ion-col>
-          <ion-col size="6">
+          <ion-col size="12">
             <ion-label position="floating">Password</ion-label>
             <ion-input
               class="u-input"
-              v-model="form.password"
+              v-model="password"
               clear-input
               required
               type="text"
@@ -69,10 +67,21 @@
             </ion-input>
           </ion-col>
           <ion-col size="6">
+            <ion-label position="floating">Mobile</ion-label>
+            <ion-input
+              class="u-input"
+              v-model="mobile"
+              clear-input
+              required
+              type="number"
+            ></ion-input>
+          </ion-col>
+
+          <ion-col size="6">
             <ion-label position="floating">Select Type</ion-label>
             <ion-select
               class="u-input"
-              v-model="form.account_type"
+              v-model="account_type"
               placeholder="Select role"
               required
             >
@@ -91,14 +100,14 @@
             :disabled="is_btn_loading"
             class="mt-5"
             expand="block"
-            style="margin-top: 10%; margin-bottom: 5%"
+            style="margin-top: 5%; margin-bottom: 5%"
             @click="saveData"
           >
             <ion-spinner :hidden="!is_btn_loading" name="circles"></ion-spinner>
             Register
           </ion-button>
         </ion-col>
-        <ion-col size="12" style="margin-left: 20%">
+        <ion-col size="12" style="margin-left: 18%">
           <span style="margin-top: 15%"
             >Already have an account? <a href="/login"> Login </a></span
           >
@@ -112,17 +121,7 @@
 
 <script>
 import auth_api from "@/apis/modules/auth_api";
-import {
-  addCircleOutline,
-  arrowDownCircleOutline,
-  arrowForwardCircleOutline,
-  arrowForwardOutline,
-  cafeOutline,
-  calendarOutline,
-  removeCircleOutline,
-  timeOutline,
-  minusOutline,
-} from "ionicons/icons";
+import { lockClosedOutline, mailOutline, eye, eyeOff } from "ionicons/icons";
 import {
   IonModal,
   IonText,
@@ -151,8 +150,10 @@ import {
   IonCardTitle,
   createAnimation,
 } from "@ionic/vue";
-
-export default {
+import { defineComponent } from "vue";
+import { defineRule, useField, useForm } from "vee-validate";
+import { useRouter } from "vue-router";
+export default defineComponent({
   components: {
     IonModal,
     IonContent,
@@ -181,46 +182,90 @@ export default {
     IonIcon,
   },
   name: "add_student",
-  setup() {
-    const enterAnimation = (baseEl) => {
-      const root = baseEl.shadowRoot;
-
-      const backdropAnimation = createAnimation()
-        .addElement(root.querySelector("ion-backdrop"))
-        .fromTo("opacity", "0.01", "var(--backdrop-opacity)");
-
-      const wrapperAnimation = createAnimation()
-        .addElement(root.querySelector(".modal-wrapper"))
-        .keyframes([
-          { offset: 0, opacity: "0", transform: "scale(0)" },
-          { offset: 1, opacity: "0.99", transform: "scale(1)" },
-        ]);
-
-      return createAnimation()
-        .addElement(baseEl)
-        .easing("ease-out")
-        .duration(500)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-    };
-
-    const leaveAnimation = (baseEl) => {
-      return enterAnimation(baseEl).direction("reverse");
-    };
-    return { enterAnimation, leaveAnimation, calendarOutline };
-  },
 
   data() {
     return {
       is_btn_loading: false,
       is_open: false,
-      form: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        mobile: "",
-        account_type: "",
-      },
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      mobile: "",
+      account_type: "",
+    };
+  },
+  setup() {
+    // validation rules
+
+    // require
+    defineRule("requiredEmail", (value) => {
+      if (!value || !value.length) {
+        return "The Email field is required";
+      }
+      return true;
+    });
+
+    defineRule("requiredPassword", (value) => {
+      if (!value || !value.length) {
+        return "The Password field is required";
+      }
+      return true;
+    });
+
+    // checking valid email
+    defineRule("email", (email) => {
+      if (
+        !/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/.test(
+          email
+        )
+      ) {
+        return "invalid email";
+      }
+      return true;
+    });
+
+    // checking valid email
+    defineRule("password", (password) => {
+      if (
+        !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/.test(password)
+      ) {
+        return "Your password must contain at least one uppercase, one lowercase, one special character and one digit";
+      }
+      return true;
+    });
+
+    function validation() {
+      return theForm.validate();
+    }
+
+    const schema = {
+      email: "requiredEmail|email",
+      password: "requiredPassword",
+    };
+
+    // Create a form context with the validation schema
+    const theForm = useForm({
+      validationSchema: schema,
+    });
+
+    // No need to define rules for fields
+    const { value: email, errorMessage: emailError } = useField("email");
+    const { value: password, errorMessage: passwordError } =
+      useField("password");
+
+    const router = useRouter();
+    return {
+      validation,
+      emailError,
+      passwordError,
+      email,
+      password,
+      router,
+      lockClosedOutline,
+      mailOutline,
+      eye,
+      eyeOff,
     };
   },
   methods: {
@@ -234,7 +279,15 @@ export default {
     async saveData() {
       try {
         this.is_btn_loading = true;
-        await auth_api.register(this.form)
+        let payload = {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+          password: this.password,
+          mobile: this.mobile,
+          account_type: this.account_type,
+        };
+        await auth_api.register(payload);
         await this.successToast("user registered successfully");
         this.is_btn_loading = false;
         this.$router.push("/login");
@@ -244,7 +297,7 @@ export default {
       this.is_btn_loading = false;
     },
   },
-};
+});
 </script>
 
 <style scoped>
