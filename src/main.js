@@ -26,12 +26,14 @@ import './theme/main.css';
 
 
 import toastMixin from "@/mixins/toastMixin";
+import LottieAnimation from "lottie-web-vue";
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
 app.mixin({
   mixins: [toastMixin]
 });
+app.use(LottieAnimation);
 router.isReady().then(() => {
   app.mount('#app');
 });
