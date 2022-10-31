@@ -261,13 +261,8 @@ export default defineComponent({
         let respond = (await authAPI.login(payload)).data
         localStorage.setItem('token', respond.token)
         await this.successToast('You are logged in successfully')
-        if(respond.data.user.account_type === 'admin'){
-          this.router.push('/admin_home')
-        }else if(respond.data.user.account_type === 'supplier'){
-          this.router.push('/supplier/home')
-        }else if(respond.data.user.account_type === 'stock manager'){
-          this.router.push('/stock/home')
-        }
+        await this.router.push('/home/dash_board')
+
       } catch (e) {
         await this.dangerToast(e.message)
       }

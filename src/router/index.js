@@ -18,7 +18,7 @@ const routes = [
             },
             {
                 path: 'dash_board',
-                component: () => import('@/views/passenger/components')
+                component: () => import('@/views/passenger/booking')
             },
             {
                 path: 'qr',
