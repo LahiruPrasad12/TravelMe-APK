@@ -15,7 +15,7 @@
                   class="small-header anim"
                   style="--delay: 0.3s; margin-left: 5px"
                 >
-                  <ion-label position="floating">Origin</ion-label>
+                  <ion-label position="floating">origin</ion-label>
                   <ion-list>
                     <ion-item>
                       <ion-select
@@ -63,7 +63,7 @@
                   class="small-header anim"
                   style="--delay: 0.3s; margin-left: 5px"
                 >
-                  <ion-label position="floating">Destination</ion-label>
+                  <ion-label position="floating">destination</ion-label>
                   <ion-list>
                     <ion-item>
                       <ion-select

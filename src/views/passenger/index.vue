@@ -15,14 +15,14 @@
           <ion-label v-show="tabName !=='dash_board'" style="color: #ffffff;">Dashboard</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button
+        <!-- <ion-tab-button
             href="/admin_home/staff"
             tab="staff"
             v-on:click="afterTabChange('staff')" style="background-color: black">
           <ion-icon :icon="peopleOutline"/>
           <ion-label v-show="tabName==='staff'" style="color: #5bf5a8;">Staff</ion-label>
           <ion-label v-show="tabName !=='staff'" style="color: #ffffff;">Staff</ion-label>
-        </ion-tab-button>
+        </ion-tab-button> -->
 
         <ion-tab-button
           @click="confirmRequest()"
@@ -39,14 +39,6 @@
           >
         </ion-tab-button>
 
-        <!--        <ion-tab-button-->
-        <!--            href="/tabs/leaves"-->
-        <!--            tab="leaves"-->
-        <!--            v-on:click="afterTabChange('leaves')">-->
-        <!--          <ion-icon :icon="cafeOutline"/>-->
-        <!--          <ion-label v-show="tabName==='leaves'" style="color: #000000;">Leaves</ion-label>-->
-        <!--          <ion-label v-show="tabName !=='leaves'" style="color: #ffffff;">Leaves</ion-label>-->
-        <!--        </ion-tab-button>-->
       </ion-tab-bar>
     </ion-tabs>
     <!--      <ion-tab-bar slot="bottom">-->
