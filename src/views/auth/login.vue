@@ -2,36 +2,52 @@
   <ion-page>
     <ion-content class="login-wrap">
       <ion-grid>
-        <ion-row style="padding-top: 15px; align-items: center;">
+        <ion-row style="padding-top: 15px; align-items: center">
           <ion-col>
-            <ion-img class="ion-float-center" src="https://i.postimg.cc/kgPQXz2s/Eyepax-logo.png" style="width:50%"/>
+            <ion-img
+              class="ion-float-center"
+              src="https://i.postimg.cc/kgPQXz2s/Eyepax-logo.png"
+              style="width: 50%"
+            />
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-text>
-              <h2 style="text-align: center; margin-top: 10%;">Login</h2>
+              <h2 style="text-align: center; margin-top: 10%">Login</h2>
             </ion-text>
           </ion-col>
         </ion-row>
 
         <ion-row class="ion-align-items-center ion-justify-content-center">
-          <div style="border:solid 1px; border-radius: 4px; width:90vw; margin-top: 3vh; ">
+          <div
+            style="
+              border: solid 1px;
+              border-radius: 4px;
+              width: 90vw;
+              margin-top: 3vh;
+            "
+          >
             <ion-row>
               <ion-col class="ion-align-self-center" size="1">
-                <ion-icon :icon="mailOutline"/>
+                <ion-icon :icon="mailOutline" />
               </ion-col>
               <ion-col class="ion-align-items-center">
                 <ion-input
-                    v-model="email"
-                    name="email"
-                    placeholder="Email Address"
-                    required/>
+                  v-model="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                />
               </ion-col>
             </ion-row>
           </div>
         </ion-row>
-        <ion-row v-show="emailError" class="ion-text-start" style="padding-left: 10px">
+        <ion-row
+          v-show="emailError"
+          class="ion-text-start"
+          style="padding-left: 10px"
+        >
           <ion-col>
             <ion-text color="danger">
               <span>{{ emailError }}</span>
@@ -39,67 +55,82 @@
           </ion-col>
         </ion-row>
 
-
-        <ion-row class="ion-align-items-center ion-justify-content-center" style="margin-top: 1vh;">
-          <div style="border:solid 1px; border-radius: 4px; width:90vw;">
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center"
+          style="margin-top: 1vh"
+        >
+          <div style="border: solid 1px; border-radius: 4px; width: 90vw">
             <ion-row>
               <ion-col class="ion-align-self-center" size="1">
                 <ion-icon :icon="lockClosedOutline"></ion-icon>
               </ion-col>
               <ion-col class="ion-align-items-center">
                 <ion-input
-                    v-model="password"
-                    :type="passwordFieldType"
-                    name="password"
-                    placeholder="Password">
+                  v-model="password"
+                  :type="passwordFieldType"
+                  name="password"
+                  placeholder="Password"
+                >
                 </ion-input>
               </ion-col>
 
-              <ion-col v-show="password" id="eyeIcon" class="ion-align-self-center" size="1">
-                <ion-icon v-if="passwordFieldType !== 'password'" :icon="eye" @click="passwordTongle"/>
-                <ion-icon v-else :icon="eyeOff" @click="passwordTongle"/>
+              <ion-col
+                v-show="password"
+                id="eyeIcon"
+                class="ion-align-self-center"
+                size="1"
+              >
+                <ion-icon
+                  v-if="passwordFieldType !== 'password'"
+                  :icon="eye"
+                  @click="passwordTongle"
+                />
+                <ion-icon v-else :icon="eyeOff" @click="passwordTongle" />
               </ion-col>
             </ion-row>
           </div>
         </ion-row>
-        <ion-row v-show="passwordError" class="ion-text-start" style="padding-left: 10px">
+        <ion-row
+          v-show="passwordError"
+          class="ion-text-start"
+          style="padding-left: 10px"
+        >
           <ion-col>
             <ion-text color="danger">
               <span>{{ passwordError }}</span>
             </ion-text>
           </ion-col>
         </ion-row>
-        <div style="display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                  align-items: center;
-                  right: -0.4px;
-                  border-radius: 4px;">
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            right: -0.4px;
+            border-radius: 4px;
+          "
+        >
           <ion-row class="ion-align-items-center ion-justify-content-center">
             <ion-col style="">
               <ion-button
-                  :disabled="is_btn_loading"
-                  expand="full"
-                  style="height: 50px;"
-                  @click="submit">
-                <ion-spinner name="circles" :hidden="!is_btn_loading"></ion-spinner>
+                :disabled="is_btn_loading"
+                expand="full"
+                style="height: 50px"
+                @click="submit"
+              >
+                <ion-spinner
+                  name="circles"
+                  :hidden="!is_btn_loading"
+                ></ion-spinner>
                 LOGIN
               </ion-button>
             </ion-col>
           </ion-row>
-
         </div>
-        <ion-row>
-          <ion-col>
-            <div class="ion-text-center ion-margin-top">
-              <span>
-                <p @click="() => router.push('/forgot-password')">
-                  Forgot Password?
-                </p>
-              </span>
-            </div>
-          </ion-col>
-        </ion-row>
+        <ion-col size="12" style="margin-left: 20%">
+          Didn't have account? <a href="/register"> Register </a>
+        </ion-col>
       </ion-grid>
     </ion-content>
   </ion-page>
@@ -126,18 +157,18 @@ import {
   IonText,
   IonThumbnail,
   IonTitle,
-  IonToolbar
-} from '@ionic/vue';
-import {defineComponent} from 'vue';
-import {useRouter} from "vue-router";
-import {eye, eyeOff, lockClosedOutline, mailOutline} from 'ionicons/icons';
-import {defineRule, useField, useForm} from 'vee-validate';
-import authAPI from '../../apis/modules/auth_api'
+  IonToolbar,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
+import { eye, eyeOff, lockClosedOutline, mailOutline } from "ionicons/icons";
+import { defineRule, useField, useForm } from "vee-validate";
+import authAPI from "../../apis/modules/auth_api";
 // import {toast} from "@/common/toast";
 
 /*dis*/
 export default defineComponent({
-  name: 'Login',
+  name: "Login",
   components: {
     IonSpinner,
     IonGrid,
@@ -159,61 +190,64 @@ export default defineComponent({
     IonCol,
     IonRow,
     IonPage,
-
   },
   data() {
     return {
-      is_btn_loading:false,
+      is_btn_loading: false,
       v: "",
       errors: "",
       email: "",
       password: "",
-      passwordFieldType: "password"
-
+      passwordFieldType: "password",
     };
   },
   setup() {
     // validation rules
 
     // require
-    defineRule('requiredEmail', value => {
+    defineRule("requiredEmail", (value) => {
       if (!value || !value.length) {
-        return 'The Email field is required';
+        return "The Email field is required";
       }
       return true;
     });
 
-    defineRule('requiredPassword', value => {
+    defineRule("requiredPassword", (value) => {
       if (!value || !value.length) {
-        return 'The Password field is required';
+        return "The Password field is required";
       }
       return true;
     });
 
     // checking valid email
-    defineRule('email', email => {
-      if (!/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/.test(email)) {
-        return 'Please enter valid email address';
+    defineRule("email", (email) => {
+      if (
+        !/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/.test(
+          email
+        )
+      ) {
+        return "Please enter valid email address";
       }
       return true;
-    })
+    });
 
     // checking valid email
-    defineRule('password', password => {
-      if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/.test(password)) {
-        return 'Your password must contain at least one uppercase, one lowercase, one special character and one digit';
+    defineRule("password", (password) => {
+      if (
+        !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/.test(password)
+      ) {
+        return "Your password must contain at least one uppercase, one lowercase, one special character and one digit";
       }
       return true;
-    })
+    });
 
     function validation() {
       return theForm.validate();
     }
 
     const schema = {
-      email: 'requiredEmail|email',
-      password: 'requiredPassword',
-
+      email: "requiredEmail|email",
+      password: "requiredPassword",
     };
 
     // Create a form context with the validation schema
@@ -222,8 +256,9 @@ export default defineComponent({
     });
 
     // No need to define rules for fields
-    const {value: email, errorMessage: emailError} = useField('email');
-    const {value: password, errorMessage: passwordError} = useField('password');
+    const { value: email, errorMessage: emailError } = useField("email");
+    const { value: password, errorMessage: passwordError } =
+      useField("password");
 
     const router = useRouter();
     return {
@@ -236,49 +271,47 @@ export default defineComponent({
       lockClosedOutline,
       mailOutline,
       eye,
-      eyeOff
-    }
+      eyeOff,
+    };
   },
   computed: {
     passwordToggleIcon() {
-      return this.passwordFieldType === 'password' ? 'eyeOff' : 'eye'
-    }
+      return this.passwordFieldType === "password" ? "eyeOff" : "eye";
+    },
   },
   methods: {
     async submit() {
-      this.v = (await this.validation());
+      this.v = await this.validation();
       if (this.v.valid) {
         await this.Login();
       }
     },
     async Login() {
       try {
-        this.is_btn_loading = true
+        this.is_btn_loading = true;
         let payload = {
           email: this.email,
-          password: this.password
-        }
-        let respond = (await authAPI.login(payload)).data
-        localStorage.setItem('token', respond.token)
-        await this.successToast('You are logged in successfully')
-        await this.router.push('/home/dash_board')
-
+          password: this.password,
+        };
+        let respond = (await authAPI.login(payload)).data;
+        localStorage.setItem("token", respond.token);
+        await this.successToast("You are logged in successfully");
+        await this.router.push("/home/dash_board");
       } catch (e) {
-        await this.dangerToast(e.message)
+        await this.dangerToast(e.message);
       }
-      this.is_btn_loading = false
+      this.is_btn_loading = false;
     },
 
     passwordTongle() {
-      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
-    }
-
+      this.passwordFieldType =
+        this.passwordFieldType === "password" ? "text" : "password";
+    },
   },
 });
 </script>
 
 <style scoped>
-
 :root {
   --ion-safe-area-top: 20px;
   --ion-safe-area-bottom: 22px;
@@ -306,7 +339,7 @@ ion-icon {
 }
 
 ion-button {
-  --background: #00C49A;
+  --background: #00c49a;
   height: 5vh;
   width: 90vw;
   margin: 15px;

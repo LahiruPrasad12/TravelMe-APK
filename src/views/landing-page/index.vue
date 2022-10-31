@@ -47,7 +47,7 @@
               </ion-button>
             </ion-col>
             <ion-col size="12" style="margin-left:20%">
-               didn't have account? <a href="/register"> Register </a>
+               Didn't have account? <a href="/register"> Register </a>
             </ion-col>
           </ion-row>
         </div>
