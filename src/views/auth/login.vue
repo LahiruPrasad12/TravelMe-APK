@@ -2,15 +2,15 @@
   <ion-page>
     <ion-content class="login-wrap">
       <ion-grid>
-        <ion-row style="padding-top: 15px">
+        <ion-row style="padding-top: 15px; align-items: center;">
           <ion-col>
-            <ion-img class="ion-float-right" src="assets/icon/hyr-Logo-Dark.png" style="width:25%"/>
+            <ion-img class="ion-float-center" src="https://i.postimg.cc/kgPQXz2s/Eyepax-logo.png" style="width:50%"/>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-text>
-              <h3 class="center">Login</h3>
+              <h2 style="text-align: center; margin-top: 10%;">Login</h2>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -261,7 +261,13 @@ export default defineComponent({
         let respond = (await authAPI.login(payload)).data
         localStorage.setItem('token', respond.token)
         await this.successToast('You are logged in successfully')
-        this.$router.push('/admin_home')
+        if(respond.data.user.account_type === 'admin'){
+          this.router.push('/admin_home')
+        }else if(respond.data.user.account_type === 'supplier'){
+          this.router.push('/supplier/home')
+        }else if(respond.data.user.account_type === 'stock manager'){
+          this.router.push('/stock/home')
+        }
       } catch (e) {
         await this.dangerToast(e.message)
       }

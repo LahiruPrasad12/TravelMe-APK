@@ -1,8 +1,11 @@
 <template>
   <ion-page>
-    <ion-header translucent>
+    <ion-header translucent >
       <ion-toolbar class="toolbar" style="padding-top: 10px; ">
-        <ion-title>SCAN QR</ion-title>
+        <ion-title>DASHBOARD</ion-title>
+        <div class="ion-activatable ripple-parent circle">
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
       </ion-toolbar>
     </ion-header>
     <ion-content class="main-container">
@@ -10,47 +13,93 @@
         <ion-list>
 
           <ion-grid>
-            <ion-row class="ion-justify-content-center">
 
-              <ion-col size="8">
-                <div class="small-header anim" style="--delay: .3s; margin-left: 5px">
-                  <ion-label position="floating">Origin</ion-label>
-                  <ion-list>
-                    <ion-item>
-                      <ion-select class="ion-activatable ripple-parent rectangle" interface="popover"
-                                  placeholder="Select origin">
-                        <ion-select-option value="apples">Apples</ion-select-option>
-                        <ion-select-option value="oranges">Oranges</ion-select-option>
-                        <ion-select-option value="bananas">Bananas</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
+            <div class="small-header anim" style="--delay: .3s; margin-left: 5px"> <ion-text color="#000000">
+              <h3>Overview</h3>
+            </ion-text></div>
+            <ion-row>
+              <ion-col size="12">
+                <div class="main-blogs">
+                  <div class="main-blog anim" style="--delay: .1s">
+                    <div class="main-blog__title">TOTAL STAFF</div>
+                    <div class="main-blog__title2">22</div>
+                    <div class="main-blog__author">
+                      <div class="author-detail">
+                        <div class="author-name">Staff Management</div>
+                        <div class="author-info">Live Count</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="main-blog anim" style="--delay: .2s">
+                    <div class="main-blog__title">TOTAL ITEMS</div>
+                    <div class="main-blog__title2">54</div>
+                    <div class="main-blog__author tips">
+                      <div class="author-detail">
+                        <div class="author-name">Stock Management</div>
+                        <div class="author-info">Live Count</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </ion-col>
-              <ion-col size="8">
-                <div class="small-header anim" style="--delay: .3s; margin-left: 5px">
-                <ion-button class="ion-float-right">
-                    <ion-icon slot="icon-only" :icon="star"></ion-icon>
-                </ion-button>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <div class="small-header anim" style="--delay: .3s; margin-left: 5px">Analytics</div>
+            <ion-row>
+              <ion-col size="4">
+                <div class="video anim" style="--delay: .5s">
+                  <div class="video-wrapper">
+                    <img src="https://i.postimg.cc/Qtk5bhM0/staff-c.jpg" type="">
+                    <div class="author-img__wrapper video-author">
+                      <svg class="feather feather-check" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M20 6L9 17l-5-5"/>
+                      </svg>
+                      <img class="author-img" src="https://i.postimg.cc/0Nv7Jzkb/staff2.jpg"/>
+                    </div>
+                  </div>
+                  <div class="video-by">Users</div>
+                  <!--                <div class="video-name">TOTAL STAFF MEMBERS</div>-->
+                  <div class="video-name2">10</div>
                 </div>
               </ion-col>
-              <ion-col size="8">
-                <div class="small-header anim" style="--delay: .3s; margin-left: 5px">
-                  <ion-label position="floating">Destination</ion-label>
-                  <ion-list>
-                    <ion-item>
-                      <ion-select interface="popover" placeholder="Select destination">
-                        <ion-select-option value="apples">Apples</ion-select-option>
-                        <ion-select-option value="oranges">Oranges</ion-select-option>
-                        <ion-select-option value="bananas">Bananas</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
+              <ion-col size="4">
+                <div class="video anim" style="--delay: .6s">
+                  <div class="video-wrapper">
+                    <img src="https://i.postimg.cc/RV3hCvzy/item.jpg" type="">
+                    <div class="author-img__wrapper video-author">
+                      <svg class="feather feather-check" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M20 6L9 17l-5-5"/>
+                      </svg>
+                      <img class="author-img" src="https://i.postimg.cc/tRcPNSR0/item2.jpg"/>
+                    </div>
+                  </div>
+                  <div class="video-by">Staff</div>
+                  <!--                <div class="video-name">TOTAL STOCK MANAGERS</div>-->
+                  <div class="video-name2">5</div>
                 </div>
               </ion-col>
-              <ion-col size="8">
-                <div class="small-header anim" style="--delay: .3s; margin-left: 5px">
-                  <ion-button expand="block">Proceed</ion-button>
+              <ion-col size="4">
+                <div class="video anim" style="--delay: .4s">
+                  <div class="video-wrapper">
+                    <img src="https://i.postimg.cc/50HTYKN4/sup.jpg" type="">
+                    <div class="author-img__wrapper video-author">
+                      <svg class="feather feather-check" fill="none" stroke="currentColor" stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M20 6L9 17l-5-5"/>
+                      </svg>
+                      <img class="author-img" src="https://i.postimg.cc/cHX7WdN6/sup2.jpg"/>
+                    </div>
+                  </div>
+                  <div class="video-by">Suppliers</div>
+                  <!--                <div class="video-name">TOTAL SHIPPING ITEMS</div>-->
+                  <div class="video-name2">2</div>
                 </div>
               </ion-col>
             </ion-row>
@@ -63,9 +112,6 @@
 
 <script>
 import '@/assets/test.css'
-import {
-  star
-} from 'ionicons/icons';
 import {
   IonAvatar,
   IonBackButton,
@@ -97,12 +143,10 @@ import {
   IonGrid,
   IonSelectOption,
   IonText,
-  IonInput,
-  IonSearchbar
+  IonRippleEffect
 } from '@ionic/vue';
-import {defineComponent} from 'vue';
 
-export default defineComponent({
+export default {
   components: {
     IonPage,
     IonHeader,
@@ -130,25 +174,10 @@ export default defineComponent({
     IonGrid,
     IonSelectOption,
     IonText,
-    IonInput,
-    IonSearchbar
+    IonRippleEffect
   },
-  name: "index",
-
-  setup() {
-    return {star};
-  },
-
-  methods: {
-    handleChange(event) {
-      console.log(event);
-      const query = event.target.value.toLowerCase();
-      this.results = this.data.filter(d => d.toLowerCase().indexOf(query) > -1);
-    },
-  },
-
-
-})
+  name: "index"
+}
 </script>
 
 <style scoped>

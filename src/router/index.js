@@ -1,6 +1,5 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Auth from './modules/auth'
-import SupplierTab from '../views/supplier/index'
 import TabsPage from '../views/passenger/index'
 
 const routes = [
@@ -19,32 +18,14 @@ const routes = [
             },
             {
                 path: 'dash_board',
-                component: () => import('@/views/passenger/dashboard/index')
+                component: () => import('@/views/passenger/components')
             },
             {
                 path: 'qr',
-                component: () => import('@/views/passenger/dashboard/generate_qr')
-            },
-            {
-                path: 'staff',
-                component: () => import('@/views/admin-dashboard/staff/index')
+                component: () => import('@/views/passenger/components/generate_qr')
             },
         ]
     },
-    {
-        path: '/supplier/',
-        component: SupplierTab,
-        children: [
-            {
-                path: 'home',
-                component: () => import('@/views/supplier/items/index')
-            },
-            {
-                path: 'request',
-                component: () => import('@/views/supplier/request/index')
-            }
-        ]
-    }
 ]
 
 const router = createRouter({
