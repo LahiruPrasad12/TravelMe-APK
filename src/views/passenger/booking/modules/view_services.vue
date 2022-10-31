@@ -18,7 +18,12 @@
       </ion-toolbar>
       <ion-grid>
         <ion-row>
-          <ion-col size="12" v-for="service in services" :key="service._id">
+          <ion-col
+            size="12"
+            v-for="service in services"
+            :key="service._id"
+            @click="make_payment(service)"
+          >
             <ion-card>
               <ion-card-header>
                 <ion-card-title>{{ service.name }}</ion-card-title>
@@ -42,12 +47,15 @@
                 </span>
                 <br />
                 <span>
-                  <ion-icon slot="icon-only" :icon="carOutline"></ion-icon> {{ service.bus_num }} |
-                  <ion-icon slot="icon-only" :icon="contractOutline"></ion-icon> {{ service.type }} |
+                  <ion-icon slot="icon-only" :icon="carOutline"></ion-icon>
+                  {{ service.bus_num }} |
+                  <ion-icon slot="icon-only" :icon="contractOutline"></ion-icon>
+                  {{ service.type }} |
                   <ion-icon
                     slot="icon-only"
                     :icon="phoneLandscapeOutline"
-                  ></ion-icon> {{ service.contact_num }} |
+                  ></ion-icon>
+                  {{ service.contact_num }} |
                 </span>
               </ion-card-content>
             </ion-card>
@@ -206,6 +214,11 @@ export default {
         this.services = respond;
       } catch (error) {}
       this.is_loading = false;
+    },
+
+    make_payment(data) {
+        this.$router.push(`home/payment/${data._id}`);
+        
     },
   },
 };
