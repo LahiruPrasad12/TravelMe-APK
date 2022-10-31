@@ -167,7 +167,7 @@
             </ion-card-content>
           </div>
         </ion-card>
-        <ion-card>
+        <ion-card v-if="is_make_payment">
           <div
             class="small-header anim"
             style="--delay: 0.3s; margin-left: 5px"
@@ -181,14 +181,14 @@
               placeholder="Please save this QR Code to prove your payment to the driver"
               style="text-align: center"
             ></ion-textarea>
-            <div style="margin-left: 18%; margin-top: 20%">
+            <div style="margin-left:10%; margin-top: 7%">
               <vue-qrcode v-bind:value="qrValue" />
             </div>
             <ion-text
               @click="router.push('/home/dash_board')"
               class="ion-text-wrap"
               color="primary"
-              style="text-align: center; margin-left: 32%; margin-right: 12%"
+              style="text-align: center; margin-left: 25%; margin-right: 12%"
               >Go Back To Home</ion-text
             >
           </ion-card-content>
@@ -416,10 +416,9 @@ export default defineComponent({
     },
     async makePaypalPayment() {
       try {
-        alert("payment has been completed successfully");
         this.validat2 = await this.validation();
         if (this.validat2) {
-          alert("payment has been completed successfully");
+
           this.is_card_payment = false;
           this.is_paypal_payment = false;
           this.is_make_payment = true;
