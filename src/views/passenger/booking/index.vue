@@ -21,6 +21,7 @@
                       <ion-select
                         class="ion-activatable ripple-parent rectangle"
                         interface="popover"
+                        v-model="origin"
                         placeholder="Select origin"
                       >
                         <ion-select-option value="matara"
@@ -57,6 +58,7 @@
                     <ion-item>
                       <ion-select
                         interface="popover"
+                        v-model="destination"
                         placeholder="Select destination"
                       >
                         <ion-select-option value="galle"
@@ -78,7 +80,7 @@
                   class="small-header anim"
                   style="--delay: 0.3s; margin-left: 5px"
                 >
-                  <ion-button expand="block">Proceed</ion-button>
+                  <ion-button expand="block" @click="ViewServices()" >Proceed</ion-button>
                 </div>
               </ion-col>
             </ion-row>
@@ -86,11 +88,13 @@
         </ion-list>
       </div>
     </ion-content>
+    <ViewServices ref = "service" />
   </ion-page>
 </template>
 
 <script>
 import "@/assets/test.css";
+import ViewServices from "./modules/view_services.vue";
 import { star } from "ionicons/icons";
 import {
   IonAvatar,
@@ -162,21 +166,26 @@ export default defineComponent({
     IonText,
     IonInput,
     IonSearchbar,
+    ViewServices,
   },
   name: "index",
+    data() {
+    return {
+     origin:'',
+     destination:''
+    }
+  },
+
 
   setup() {
     return { star };
   },
 
   methods: {
-    handleChange(event) {
-      console.log(event);
-      const query = event.target.value.toLowerCase();
-      this.results = this.data.filter(
-        (d) => d.toLowerCase().indexOf(query) > -1
-      );
-    },
+    ViewServices(){
+      console.log(this.origin);
+      this.$refs.service.openViewServicesModal(this.origin,this.destination);
+    }
   },
 });
 </script>
