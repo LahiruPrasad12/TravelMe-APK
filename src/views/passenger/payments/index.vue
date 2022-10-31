@@ -97,6 +97,12 @@
       <div style="margin-left: 18%; margin-top: 20%">
         <vue-qrcode v-bind:value="qrValue" />
       </div>
+       <ion-text
+       @click="router.push('/home/dash_board')"
+          class="ion-text-wrap"
+          color="primary"
+          style="text-align: center; margin-left: 32%; margin-right: 12%"
+        >Go Back To Home</ion-text>
     </ion-content>
   </ion-page>
 </template>
@@ -119,6 +125,7 @@ import {
   IonSegmentButton,
   IonSlides,
   IonSlide,
+  IonText,
 } from "@ionic/vue";
 import {
   cafeOutline,
@@ -127,6 +134,7 @@ import {
   timeOutline,
   peopleOutline,
   mapOutline,
+  arrowBackCircleOutline,
 } from "ionicons/icons";
 import { useRouter } from "vue-router";
 import { defineComponent } from "vue";
@@ -149,6 +157,7 @@ export default defineComponent({
     IonSlides,
     IonSlide,
     VueQrcode,
+    IonText,
   },
   methods: {
     carPayment() {
@@ -186,6 +195,7 @@ export default defineComponent({
       peopleOutline,
       timeOutline,
       router,
+      arrowBackCircleOutline,
     };
   },
   data() {
