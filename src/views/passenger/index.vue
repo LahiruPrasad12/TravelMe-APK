@@ -15,10 +15,10 @@
         >
           <ion-icon :icon="homeOutline" />
           <ion-label v-show="tabName === 'dash_board'" style="color: #5bf5a8"
-            >Dashboard</ion-label
+            >Home</ion-label
           >
           <ion-label v-show="tabName !== 'dash_board'" style="color: #ffffff"
-            >Dashboard</ion-label
+            >Home</ion-label
           >
         </ion-tab-button>
 
