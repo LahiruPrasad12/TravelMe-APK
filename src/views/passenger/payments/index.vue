@@ -114,6 +114,13 @@
                     </ion-text>
                   </ion-col>
                 </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <h1 style="text-align: center; margin-top: 2%">
+                      Fee Rs.{{ get_sevice.price }}
+                    </h1>
+                  </ion-col>
+                </ion-row>
               </ion-col>
               <ion-col size="12">
                 <ion-button
@@ -157,6 +164,13 @@
                     </ion-text>
                   </ion-col>
                 </ion-row>
+                <ion-row>
+                  <ion-col size="12">
+                    <h1 style="text-align: center; margin-top: 2%">
+                      Fee Rs.{{ get_sevice.price }}
+                    </h1>
+                  </ion-col>
+                </ion-row>
               </ion-col>
               <ion-button
                 expand="block"
@@ -181,7 +195,7 @@
               placeholder="Please save this QR Code to prove your payment to the driver"
               style="text-align: center"
             ></ion-textarea>
-            <div style="margin-left:10%; margin-top: 7%">
+            <div style="margin-left: 10%; margin-top: 7%">
               <vue-qrcode v-bind:value="qrValue" />
             </div>
             <ion-text
@@ -418,7 +432,6 @@ export default defineComponent({
       try {
         this.validat2 = await this.validation();
         if (this.validat2) {
-
           this.is_card_payment = false;
           this.is_paypal_payment = false;
           this.is_make_payment = true;

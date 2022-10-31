@@ -1,6 +1,6 @@
 {
 	"appId": "io.ionic.starter",
-	"appName": "EyePax",
+	"appName": "TravelMe",
 	"webDir": "dist",
 	"plugins": {
 		"SplashScreen": {
