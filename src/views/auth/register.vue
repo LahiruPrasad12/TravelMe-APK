@@ -19,7 +19,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="12">
+          <ion-col size="10">
             <ion-label position="floating">First Name</ion-label>
             <ion-input
               v-model="first_name"
@@ -34,7 +34,7 @@
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col size="12">
+          <ion-col size="10">
             <ion-label position="floating">Last Name</ion-label>
             <ion-input
               class="u-input"
@@ -51,7 +51,7 @@
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col size="12">
+          <ion-col size="10">
             <ion-label position="floating">Email</ion-label>
             <ion-input
               class="u-input"
@@ -69,7 +69,7 @@
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col size="12">
+          <ion-col size="10">
             <ion-label position="floating">Password</ion-label>
             <ion-input
               class="u-input"
@@ -87,7 +87,7 @@
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-label position="floating">Mobile</ion-label>
             <ion-input
               class="u-input"
@@ -106,7 +106,7 @@
             </ion-row>
           </ion-col>
 
-          <ion-col size="6">
+          <ion-col size="5">
             <ion-label position="floating">Select Type</ion-label>
             <ion-select
               class="u-input"
@@ -129,20 +129,22 @@
               </ion-col>
             </ion-row>
           </ion-col>
+          <ion-col size="10">
+            <ion-button
+              :disabled="is_btn_loading"
+              class="mt-5"
+              expand="block"
+              style="margin-top: 5%; margin-bottom: 5%"
+              @click="saveData"
+            >
+              <ion-spinner
+                :hidden="!is_btn_loading"
+                name="circles"
+              ></ion-spinner>
+              Register
+            </ion-button>
+          </ion-col>
         </ion-row>
-
-        <ion-col>
-          <ion-button
-            :disabled="is_btn_loading"
-            class="mt-5"
-            expand="block"
-            style="margin-top: 5%; margin-bottom: 5%"
-            @click="saveData"
-          >
-            <ion-spinner :hidden="!is_btn_loading" name="circles"></ion-spinner>
-            Register
-          </ion-button>
-        </ion-col>
         <ion-col size="12" style="margin-left: 18%">
           <span style="margin-top: 15%"
             >Already have an account? <a href="/login"> Login </a></span
