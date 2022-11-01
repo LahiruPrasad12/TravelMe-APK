@@ -7,40 +7,56 @@
     </ion-header>
     <ion-content fullscreen>
       <div class="small-header anim" style="--delay: 0.3s; margin-left: 5px">
-        <ion-segment value="cart_payment" style="margin-top: 5%" scrollable>
-          <ion-segment-button
+        <ion-row>
+          <ion-segment
+            v-if="!is_make_payment"
             value="cart_payment"
-            checked
-            @click="carPayment()"
+            style="margin-top: 5%;margin-left: 15%"
+            scrollable
+            class="ion-align-items-center ion-justify-content-center"
+            
           >
-            <ion-label>
-              <a
-                class="nav-link active"
-                id="visa-tab"
-                data-toggle="tab"
-                href="#visa"
-                role="tab"
-                aria-controls="visa"
-                aria-selected="true"
+            <ion-col size="6">
+              <ion-segment-button
+                value="cart_payment"
+                checked
+                @click="carPayment()"
               >
-                <img src="https://i.imgur.com/sB4jftM.png" width="80" /> </a
-            ></ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="paypal_payment" @click="payPalPayment()">
-            <ion-label>
-              <a
-                class="nav-link"
-                id="paypal-tab"
-                data-toggle="tab"
-                href="#paypal"
-                role="tab"
-                aria-controls="paypal"
-                aria-selected="false"
+                <ion-label>
+                  <a
+                    class="nav-link active"
+                    id="visa-tab"
+                    data-toggle="tab"
+                    href="#visa"
+                    role="tab"
+                    aria-controls="visa"
+                    aria-selected="true"
+                  >
+                    <img src="https://i.imgur.com/sB4jftM.png" width="80" /> </a
+                ></ion-label>
+              </ion-segment-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-segment-button
+                value="paypal_payment"
+                @click="payPalPayment()"
               >
-                <img src="https://i.imgur.com/yK7EDD1.png" width="80" /> </a
-            ></ion-label>
-          </ion-segment-button>
-        </ion-segment>
+                <ion-label>
+                  <a
+                    class="nav-link"
+                    id="paypal-tab"
+                    data-toggle="tab"
+                    href="#paypal"
+                    role="tab"
+                    aria-controls="paypal"
+                    aria-selected="false"
+                  >
+                    <img src="https://i.imgur.com/yK7EDD1.png" width="80" /> </a
+                ></ion-label>
+              </ion-segment-button>
+            </ion-col>
+          </ion-segment>
+        </ion-row>
         <ion-card v-if="is_card_payment">
           <ion-card-header>
             <ion-card-title>Card Payment</ion-card-title>
@@ -190,19 +206,21 @@
               <ion-card-title>Generated QR Code</ion-card-title>
             </ion-card-header>
           </div>
-          <ion-card-content>
+          <ion-card-content
+            class="ion-align-items-center ion-justify-content-center"
+          >
             <ion-textarea
               placeholder="Please save this QR Code to prove your payment to the driver"
               style="text-align: center"
             ></ion-textarea>
-            <div style="margin-left: 10%; margin-top: 7%">
+            <ion-row class="ion-align-items-center ion-justify-content-center">
               <vue-qrcode v-bind:value="qrValue" />
-            </div>
+            </ion-row>
             <ion-text
               @click="router.push('/home/dash_board')"
-              class="ion-text-wrap"
+              class="ion-align-items-center ion-justify-content-center"
               color="primary"
-              style="text-align: center; margin-left: 25%; margin-right: 12%"
+              style="margin-left: 30%; text-align: center"
               >Go Back To Home</ion-text
             >
           </ion-card-content>
@@ -244,6 +262,8 @@ import {
   IonCardContent,
   IonCardTitle,
   createAnimation,
+  IonSegment,
+  IonSegmentButton,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { defineRule, useField, useForm } from "vee-validate";
@@ -278,6 +298,8 @@ export default defineComponent({
     IonText,
     IonIcon,
     VueQrcode,
+    IonSegment,
+    IonSegmentButton,
   },
   name: "add_student",
 
@@ -408,10 +430,12 @@ export default defineComponent({
     carPayment() {
       this.is_card_payment = true;
       this.is_paypal_payment = false;
+      this.is_make_payment = false;
     },
     payPalPayment() {
       this.is_card_payment = false;
       this.is_paypal_payment = true;
+      this.is_make_payment = false;
     },
     async makeCardPayment() {
       try {
