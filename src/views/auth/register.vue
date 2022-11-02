@@ -4,12 +4,16 @@
       <ion-grid>
         <ion-row style="padding-top: 15px; align-items: center">
           <ion-col>
-            <ion-img
+            <div class="brand-wrapper">
+                <img src="https://i.postimg.cc/LsdrjBz8/paper-airplane-travel-logo-260nw-562039321.jpg" alt="logo" class="logo"/>
+              </div>
+            <!-- <ion-img
               class="ion-float-center"
-              src="https://i.postimg.cc/kgPQXz2s/Eyepax-logo.png"
+               src="https://i.postimg.cc/LsdrjBz8/paper-airplane-travel-logo-260nw-562039321.jpg"
               style="width: 50%"
-            />
+            /> -->
           </ion-col>
+          
         </ion-row>
         <ion-row>
           <ion-col>

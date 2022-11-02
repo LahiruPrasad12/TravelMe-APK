@@ -16,7 +16,7 @@
         />
       </div>
       <div style="margin-top:-10%" class="ion-text-center padding-header">
-        <h1>Welcome to TravelMe</h1>
+        <h1>Welcome to TravelX</h1>
         <h6 style="margin-top: 0%">Travelling</h6>
         <div
           class="lorem-header"

@@ -4,11 +4,9 @@
       <ion-grid>
         <ion-row style="padding-top: 15px; align-items: center">
           <ion-col>
-            <ion-img
-              class="ion-float-center"
-              src="https://i.postimg.cc/kgPQXz2s/Eyepax-logo.png"
-              style="width: 50%"
-            />
+            <div class="brand-wrapper">
+                <img src="https://i.postimg.cc/LsdrjBz8/paper-airplane-travel-logo-260nw-562039321.jpg" alt="logo" class="logo"/>
+              </div>
           </ion-col>
         </ion-row>
         <ion-row>
